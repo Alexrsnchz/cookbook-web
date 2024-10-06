@@ -44,7 +44,7 @@ function Login() {
           />
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
             <label
               className="font-semibold text-gray-600 block mb-2"

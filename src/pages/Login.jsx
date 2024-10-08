@@ -11,13 +11,32 @@ import {
 import logo from '../assets/images/logo.svg';
 import background from '../assets/images/background.webp';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userLoginSchema } from '../validations/UserSchema';
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [socialProvider, setSocialProvider] = useState(null);
 
-  const handleSubmit = () => {
-    setIsLoading(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(userLoginSchema),
+  });
+
+  const onSubmit = (data) => {
+    try {
+      setIsLoading(true);
+      console.log('Formulario enviado con éxito:', data);
+      console.log('Errores:', errors);
+    } catch (error) {
+      console.log('Error al enviar el formulario:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSocialLogin = (provider) => {
@@ -44,7 +63,7 @@ function Login() {
           />
         </div>
 
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="mb-4">
             <label
               className="font-semibold text-gray-600 block mb-2"
@@ -53,17 +72,28 @@ function Login() {
               Email
             </label>
             <div className="relative flex items-center">
-              <span className="absolute left-3 text-gray-400">
+              <span
+                className={`absolute left-3 ${
+                  errors.email ? 'text-red-500' : 'text-gray-400'
+                }`}
+              >
                 <EmailIcon />
               </span>
               <input
                 type="email"
                 id="email"
                 placeholder="email@example.com"
-                required
-                className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:border-gray-500"
+                {...register('email')}
+                className={`pl-10 pr-4 py-2 w-full rounded-lg border focus:outline-none ${
+                  errors.email
+                    ? 'border-red-500 focus:border-red-500 text-red-500 placeholder-red-300'
+                    : 'border-gray-300 focus:border-gray-500 text-gray-800 placeholder-gray-400'
+                }`}
               />
             </div>
+            {errors.email && (
+              <p className="text-red-500 pt-1 pl-2">{errors.email.message}</p>
+            )}
           </div>
 
           <div className="mb-4">
@@ -74,17 +104,30 @@ function Login() {
               Password
             </label>
             <div className="relative flex items-center">
-              <span className="absolute left-3 text-gray-500">
+              <span
+                className={`absolute left-3 ${
+                  errors.password ? 'text-red-500' : 'text-gray-400'
+                }`}
+              >
                 <PasswordIcon />
               </span>
               <input
                 type="password"
                 id="password"
                 placeholder="••••••••"
-                required
-                className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:border-gray-500"
+                {...register('password')}
+                className={`pl-10 pr-4 py-2 w-full rounded-lg border focus:outline-none ${
+                  errors.password
+                    ? 'border-red-500 text-red-500 placeholder-red-300 focus:border-red-500'
+                    : 'border-gray-300 focus:border-gray-500 text-gray-800 placeholder-gray-400'
+                }`}
               />
             </div>
+            {errors.password && (
+              <p className="text-red-500 pt-1 pl-2">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <div className="text-right mb-6">

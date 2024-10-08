@@ -1,7 +1,7 @@
-export function EmailIcon() {
+export function EmailIcon({ className }) {
   return (
     <svg
-      className="w-5 h-5"
+      className={`w-5 h-5 ${className}`}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -17,10 +17,10 @@ export function EmailIcon() {
   );
 }
 
-export function PasswordIcon() {
+export function PasswordIcon({ className }) {
   return (
     <svg
-      className="w-5 h-5"
+      className={`w-5 h-5 ${className}`}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

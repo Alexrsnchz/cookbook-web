@@ -10,14 +10,21 @@ import {
 } from '../assets/Icons';
 import logo from '../assets/images/logo.svg';
 import background from '../assets/images/background.webp';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userLoginSchema } from '../validations/UserSchema';
+import axios from 'axios';
+import Toast from '../components/auth/Toast';
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [socialProvider, setSocialProvider] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showToast, setShowToast] = useState(false);
+
+  const apiUrl = import.meta.env.VITE_COOKBOOK_URL;
+  const navigate = useNavigate();
 
   const {
     register,
@@ -27,13 +34,14 @@ function Login() {
     resolver: zodResolver(userLoginSchema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      console.log('Formulario enviado con éxito:', data);
-      console.log('Errores:', errors);
+      await axios.post(`${apiUrl}/users/login`, data);
+      navigate('/');
     } catch (error) {
-      console.log('Error al enviar el formulario:', error);
+      setErrorMessage('Invalid email or password');
+      setShowToast(true);
     } finally {
       setIsLoading(false);
     }
@@ -55,6 +63,11 @@ function Login() {
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <div className="relative z-10 rounded-xl bg-white p-8 md:p-12 shadow-lg w-11/12 max-w-lg md:max-w-md lg:max-w-lg">
+        <Toast
+          message={errorMessage}
+          isVisible={showToast}
+          setIsVisible={setShowToast}
+        />
         <div className="flex justify-center mb-5">
           <img
             src={logo}
@@ -83,6 +96,7 @@ function Login() {
                 type="email"
                 id="email"
                 placeholder="email@example.com"
+                disabled={isLoading || socialProvider !== null}
                 {...register('email')}
                 className={`pl-10 pr-4 py-2 w-full rounded-lg border focus:outline-none ${
                   errors.email
@@ -115,6 +129,7 @@ function Login() {
                 type="password"
                 id="password"
                 placeholder="••••••••"
+                disabled={isLoading || socialProvider !== null}
                 {...register('password')}
                 className={`pl-10 pr-4 py-2 w-full rounded-lg border focus:outline-none ${
                   errors.password
@@ -141,7 +156,7 @@ function Login() {
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || socialProvider !== null}
             className="bg-gray-800 text-white font-semibold py-2 w-full rounded-lg hover:bg-gray-700 disabled:bg-gray-700 transition duration-300"
           >
             {isLoading ? 'Signing In...' : 'Sign In'}
@@ -155,7 +170,7 @@ function Login() {
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => handleSocialLogin('Google')}
-            disabled={socialProvider !== null}
+            disabled={socialProvider !== null || isLoading}
             className="border border-gray-300 hover:bg-gray-100 disabled:bg-gray-100 font-semibold text-sm flex items-center justify-center gap-2 rounded-lg py-2 md:py-3 transition duration-300"
           >
             {socialProvider === 'Google' ? (
@@ -169,7 +184,7 @@ function Login() {
           </button>
           <button
             onClick={() => handleSocialLogin('Facebook')}
-            disabled={socialProvider !== null}
+            disabled={socialProvider !== null || isLoading}
             className="border border-gray-300 hover:bg-gray-100 disabled:bg-gray-100 font-semibold text-sm flex items-center justify-center gap-2 rounded-lg py-2 md:py-3 transition duration-300"
           >
             {socialProvider === 'Facebook' ? (
@@ -183,7 +198,7 @@ function Login() {
           </button>
           <button
             onClick={() => handleSocialLogin('Pinterest')}
-            disabled={socialProvider !== null}
+            disabled={socialProvider !== null || isLoading}
             className="border border-gray-300 hover:bg-gray-100 disabled:bg-gray-100 font-semibold text-sm flex items-center justify-center gap-2 rounded-lg py-2 md:py-3 transition duration-300"
           >
             {socialProvider === 'Pinterest' ? (
@@ -197,7 +212,7 @@ function Login() {
           </button>
           <button
             onClick={() => handleSocialLogin('Apple')}
-            disabled={socialProvider !== null}
+            disabled={socialProvider !== null || isLoading}
             className="border border-gray-300 hover:bg-gray-100 disabled:bg-gray-100 font-semibold text-sm flex items-center justify-center gap-2 rounded-lg py-2 md:py-3 transition duration-300"
           >
             {socialProvider === 'Apple' ? (

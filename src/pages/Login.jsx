@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import axios from 'axios';
 import {
-  AppleIcon,
+  GitHubIcon,
   EmailIcon,
   FacebookIcon,
   GoogleIcon,
   LoaderIcon,
+  MicrosoftIcon,
   PasswordIcon,
-  PinterestIcon,
 } from '../assets/Icons';
 import logo from '../assets/images/logo.svg';
 import background from '../assets/images/background.webp';
@@ -14,7 +15,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userLoginSchema } from '../validations/UserSchema';
-import axios from 'axios';
 import Toast from '../components/auth/Toast';
 
 function Login() {
@@ -197,30 +197,30 @@ function Login() {
             )}
           </button>
           <button
-            onClick={() => handleSocialLogin('Pinterest')}
+            onClick={() => handleSocialLogin('Microsoft')}
             disabled={socialProvider !== null || isLoading}
             className="border border-gray-300 hover:bg-gray-100 disabled:bg-gray-100 font-semibold text-sm flex items-center justify-center gap-2 rounded-lg py-2 md:py-3 transition duration-300"
           >
-            {socialProvider === 'Pinterest' ? (
+            {socialProvider === 'Microsoft' ? (
               <LoaderIcon />
             ) : (
               <>
-                <PinterestIcon />
-                Pinterest
+                <MicrosoftIcon />
+                Microsoft
               </>
             )}
           </button>
           <button
-            onClick={() => handleSocialLogin('Apple')}
+            onClick={() => handleSocialLogin('GitHub')}
             disabled={socialProvider !== null || isLoading}
             className="border border-gray-300 hover:bg-gray-100 disabled:bg-gray-100 font-semibold text-sm flex items-center justify-center gap-2 rounded-lg py-2 md:py-3 transition duration-300"
           >
-            {socialProvider === 'Apple' ? (
+            {socialProvider === 'GitHub' ? (
               <LoaderIcon />
             ) : (
               <>
-                <AppleIcon />
-                Apple
+                <GitHubIcon />
+                GitHub
               </>
             )}
           </button>

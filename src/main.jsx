@@ -7,11 +7,11 @@ import Home from './pages/Home';
 
 const router = createBrowserRouter([
   {
-    path: '/register',
+    path: '/signup',
     element: <Register />,
   },
   {
-    path: '/login',
+    path: '/signin',
     element: <Login />,
   },
   {

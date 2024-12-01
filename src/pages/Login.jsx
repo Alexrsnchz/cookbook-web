@@ -10,7 +10,7 @@ import {
   PasswordIcon,
 } from '../assets/Icons';
 import logo from '../assets/images/logo.svg';
-import background from '../assets/images/background.webp';
+import background from '../assets/images/authBackground.webp';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

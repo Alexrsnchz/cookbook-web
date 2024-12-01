@@ -1,9 +1,17 @@
+import Toolbar from '../components/home/Toolbar';
+import Navbar from '../components/misc/Navbar';
+
 function Home() {
   return (
-    <>
-      <h1>Home page</h1>
-      <p>Very big Home.</p>
-    </>
+    <div
+      className="min-h-screen bg-gray-400"
+      style={{
+        backgroundColor: 'gray',
+      }}
+    >
+      <Navbar />
+      <Toolbar />
+    </div>
   );
 }
 

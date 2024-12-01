@@ -1,7 +1,7 @@
-import Toolbar from '../components/home/Toolbar';
+import Toolbar from '../components/feed/Toolbar';
 import Navbar from '../components/misc/Navbar';
 
-function Home() {
+function Feed() {
   return (
     <div
       className="min-h-screen bg-gray-400"
@@ -15,4 +15,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Feed;

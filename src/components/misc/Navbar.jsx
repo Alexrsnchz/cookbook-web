@@ -42,7 +42,7 @@ function Navbar() {
       <div className="sm:hidden px-4 mt-3">
         <div className="relative">
           <input
-            className="w-full rounded-full bg-gray-100 border border-gray-300 pl-12 pr-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-full bg-gray-100 border border-gray-300 pl-12 pr-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-300"
             id="search-mobile"
             name="search-mobile"
             type="search"

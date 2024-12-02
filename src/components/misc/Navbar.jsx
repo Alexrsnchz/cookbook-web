@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import {
+  DarkThemeIcon,
   LightThemeIcon,
   NotificationsIcon,
   SearchIcon,
@@ -6,8 +8,27 @@ import {
 import logo from '../../assets/images/logo.svg';
 
 function Navbar() {
+  const [isDarkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+
+    if (storedTheme === 'dark') {
+      setDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const theme = !isDarkMode;
+    setDarkMode(theme);
+
+    localStorage.setItem('theme', theme ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', theme);
+  };
+
   return (
-    <nav className="sticky top-0 py-3 z-10 bg-white shadow-md">
+    <nav className="sticky top-0 py-3 z-10 bg-white dark:bg-gray-200 shadow-md">
       <div className="container mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-12">
         {/* Logo */}
         <div className="flex items-center flex-none">
@@ -32,8 +53,12 @@ function Navbar() {
 
         {/* Íconos y perfil */}
         <div className="flex items-center space-x-4 sm:space-x-6 flex-none">
-          <LightThemeIcon className="sm:w-6 sm:h-6 text-gray-600 hover:text-gray-800" />
-          <NotificationsIcon className="sm:w-6 sm:h-6 text-gray-600 hover:text-gray-800" />
+          <button onClick={toggleTheme}>
+            {isDarkMode ? <DarkThemeIcon /> : <LightThemeIcon />}
+          </button>
+          <button>
+            <NotificationsIcon />
+          </button>
           <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gray-600"></div>
         </div>
       </div>

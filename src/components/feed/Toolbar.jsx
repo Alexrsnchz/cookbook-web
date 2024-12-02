@@ -17,7 +17,7 @@ function Toolbar() {
           </NavLink>
         </button>
         <button className="text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full p-2 md:p-3 transition-colors">
-          <NavLink to="/explore">
+          <NavLink to="/explorer">
             <CompassIcon />
           </NavLink>
         </button>
